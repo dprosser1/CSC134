@@ -1,0 +1,57 @@
+CREATE TABLE PROJECT (
+    Project_ID INT,
+    Title VARCHAR(50),
+    Archived BOOLEAN,
+    Project_Status VARCHAR(20),
+    PRIMARY KEY (Project_ID)
+);
+
+CREATE TABLE INVESTIGATOR (
+    SSN INT PRIMARY KEY,
+    First_Name VARCHAR(20),
+    Last_NAME VARCHAR(20),
+    Organization VARCHAR(20),
+    Address VARCHAR(50),
+    Phone VARCHAR(15)
+);
+
+CREATE TABLE LANGUAGE_USED (
+    Project_ID INT,
+    Language VARCHAR(15),
+    PRIMARY KEY (Project_ID, Language),
+    FOREIGN KEY (Project_ID) REFERENCES PROJECT(Project_ID)
+);
+
+CREATE TABLE REVIEWER (
+    SSN INT PRIMARY KEY,
+    First_Name VARCHAR(20),
+    Last_Name VARCHAR(20)
+);
+
+CREATE TABLE CONTACT_HISTORY (
+    Contact_ID INT,
+    Project_ID INT,
+    CP_Name VARCHAR(40),
+    Contact_Type VARCHAR(20),
+    Contact_Details VARCHAR(50),
+    PRIMARY KEY (Contact_ID, Project_ID),
+    FOREIGN KEY (Project_ID) REFERENCES PROJECT(Project_ID)
+);
+
+CREATE TABLE REVIEWS(
+    Project_ID INT,
+    SSN INT,
+    Reviewer_Role VARCHAR(20),
+    PRIMARY KEY (Project_ID, SSN),
+    FOREIGN KEY (Project_ID) REFERENCES PROJECT(Project_ID),
+    FOREIGN KEY (SSN) REFERENCES REVIEWER(SSN)
+);
+
+CREATE TABLE WORKS_ON(
+    Project_ID INT,
+    SSN INT,
+    Inv_Role VARCHAR(20),
+    PRIMARY KEY (Project_ID, SSN),
+    FOREIGN KEY (Project_ID) REFERENCES PROJECT(Project_ID),
+    FOREIGN KEY (SSN) REFERENCES INVESTIGATOR(SSN)
+);

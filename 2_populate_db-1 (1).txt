@@ -1,0 +1,50 @@
+INSERT INTO PROJECT (Project_ID, Title, Archived, Project_Status) 
+VALUES (1, 'Project 1', 0, 'Active'),
+       (2, 'Project 2', 0, 'Active'),
+       (3, 'Project 3', 0, 'Active'),
+       (4, 'Project 4', 1, 'Completed'),
+       (5, 'Air Quality', 0, 'Active');
+
+INSERT INTO INVESTIGATOR (SSN, First_Name, Last_Name, Organization, Address, Phone) 
+VALUES (123456789, 'John', 'Smith', 'University A', '123 Main St, City A', '555-1234'),
+       (234567890, 'Jane', 'Smith', 'University B', '456 Elm St, City B', '555-5678'),
+       (345678901, 'Michael', 'Johnson', 'University C', '789 Oak St, City C', '555-9012'),
+       (456789012, 'Emily', 'Taylor', 'University D', '321 Maple St, City D', '555-6789'),
+       (567890123, 'Chris', 'Anderson', 'University X', '789 Maple St, City X', '555-1111'),
+       (678901234, 'Jessica', 'Clark', 'University Y', '890 Oak St, City Y', '555-2222'),
+       (789012345, 'Emily', 'Brown', 'University Z', '123 Pine St, City Z', '555-3333');
+
+INSERT INTO LANGUAGE_USED (Project_ID, Language) 
+VALUES (1, 'English'),
+       (2, 'Spanish'),
+       (3, 'French'),
+       (4, 'German');
+
+INSERT INTO REVIEWER (SSN, First_Name, Last_Name) 
+VALUES (567890123, 'Chris', 'Anderson'),
+       (678901234, 'Jessica', 'Clark'),
+       (789012345, 'Emily', 'Brown');
+
+INSERT INTO REVIEWS (Project_ID, SSN, Reviewer_Role) 
+VALUES (1, 567890123, 'Optional'),
+       (2, 678901234, 'Optional'),
+       (3, 567890123, 'Primary'),
+       (4, 678901234, 'Primary'),
+       (5, 789012345, 'Primary');
+
+INSERT INTO CONTACT_HISTORY (Contact_ID, Project_ID, CP_Name, Contact_Type, Contact_Details) 
+VALUES (1, 1, 'John Smith', 'Email', 'john@example.com'),
+       (2, 2, 'Jane Smith', 'Phone', '555-9876'),
+       (3, 3, 'Michael Johnson', 'Email', 'michael@example.com'),
+       (4, 4, 'Emily Taylor', 'Phone', '555-5555');
+
+INSERT INTO WORKS_ON (Project_ID, SSN, Inv_Role) 
+VALUES (1, 123456789, 'PI'),
+       (1, 234567890, 'CO-PI'),
+       (2, 345678901, 'PI'),
+       (3, 456789012, 'PI'),
+       (4, 345678901, 'PI'),
+       (4, 123456789, 'CO-PI'),
+       (3, 345678901, 'CO-PI'),
+       (5, 123456789, 'PI'),
+       (5, 678901234, 'CO-PI');

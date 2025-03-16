@@ -1,0 +1,64 @@
+SELECT P.Title, P.Project_Status, P.Archived
+FROM PROJECT P
+INNER JOIN REVIEWS R ON P.Project_ID = R.Project_ID
+WHERE R.Reviewer_Role = 'Optional';
+
+SELECT I.First_Name, I.Last_Name, I.Organization
+FROM INVESTIGATOR I
+JOIN WORKS_ON W ON I.SSN = W.SSN
+GROUP BY I.SSN
+HAVING COUNT(W.Project_ID) > 1;
+
+SELECT I.First_Name AS first, I.Last_Name AS last
+FROM INVESTIGATOR I
+JOIN WORKS_ON W ON I.SSN = W.SSN
+JOIN PROJECT P ON W.Project_ID = P.Project_ID
+WHERE P.Title = 'Air Quality'
+UNION
+SELECT R.First_Name AS first, R.Last_Name AS last
+FROM REVIEWER R
+JOIN REVIEWS RV ON R.SSN = RV.SSN
+JOIN PROJECT P ON RV.Project_ID = P.Project_ID
+WHERE P.Title = 'Air Quality';
+
+SELECT P.Project_ID, P.Title, I.SSN, I.Last_Name AS Investigator_Last_Name
+FROM PROJECT P
+JOIN WORKS_ON W ON P.Project_ID = W.Project_ID
+JOIN INVESTIGATOR I ON W.SSN = I.SSN
+ORDER BY P.Project_ID ASC;
+
+SELECT P.Project_ID, P.Title, I.SSN, I.First_Name AS Principal_Investigator_First_Name
+FROM PROJECT P
+JOIN WORKS_ON W ON P.Project_ID = W.Project_ID
+JOIN INVESTIGATOR I ON W.SSN = I.SSN
+WHERE W.Inv_Role = 'PI';
+ 
+SELECT P.Project_ID, P.Title, P.Project_Status, P.Archived
+FROM PROJECT P
+JOIN WORKS_ON W ON P.Project_ID = W.Project_ID
+WHERE W.Inv_Role = 'CO-PI';
+
+SELECT p.Project_ID, p.Title
+FROM PROJECT p
+JOIN WORKS_ON w ON p.Project_ID = w.Project_ID
+JOIN INVESTIGATOR i ON w.SSN = i.SSN
+WHERE i.First_Name = 'John' AND i.Last_Name = 'Smith' AND w.Inv_Role = 'PI';
+
+SELECT rv.SSN, COUNT(DISTINCT rv.Project_ID) AS Num_Projects_Reviewed
+FROM REVIEWS rv
+GROUP BY rv.SSN
+HAVING COUNT(DISTINCT rv.Project_ID) > 1;
+
+SELECT w.SSN, i.Last_Name, COUNT(*) AS Num_Projects_As_PI
+FROM WORKS_ON w
+JOIN INVESTIGATOR i ON w.SSN = i.SSN
+WHERE w.Inv_Role = 'PI'
+GROUP BY w.SSN, i.Last_Name
+HAVING COUNT(*) >= 2;
+
+SELECT SSN
+FROM (
+    SELECT SSN FROM REVIEWER WHERE Last_Name = 'Smith'
+    UNION
+    SELECT SSN FROM INVESTIGATOR WHERE Last_Name = 'Smith'
+) AS Smiths;
